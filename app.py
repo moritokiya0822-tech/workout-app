@@ -299,3 +299,15 @@ def delete(id):
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
+with app.app_context():
+    cursor = db.connection.cursor()
+    
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT NOT NULL,
+        password TEXT NOT NULL
+    )
+    """)
+    
+    db.connection.commit()
