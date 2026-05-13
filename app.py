@@ -5,7 +5,6 @@ app = Flask(__name__)
 
 app.secret_key = "secret_key"
 
-init_db()
 
 # DB初期化
 def init_db():
@@ -38,6 +37,7 @@ def init_db():
     conn.commit()
     conn.close()
 
+init_db()
 
 # ログイン画面
 @app.route("/login")
