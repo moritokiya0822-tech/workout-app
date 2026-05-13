@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>記録完了</title>
+</head>
+<body>
+
+    <h1>記録完了！</h1>
+
+    <p>種目: {{ menu }}</p>
+    <p>回数: {{ reps }}</p>
+    <p>重量: {{ weight }} kg</p>
+
+    <a href="/">戻る</a>
+
+</body>
+</html>
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}"
+>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>編集</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+    <h1>記録編集</h1>
+
+    <form action="/update/{{ workout[0] }}" method="POST">
+
+        <p>日付</p>
+
+        <input
+            type="date"
+            name="date"
+            value="{{ workout[1] }}"
+        >
+
+        <p>種目</p>
+
+        <input
+            type="text"
+            name="menu"
+            value="{{ workout[2] }}"
+        >
+
+        <p>回数</p>
+
+        <input
+            type="number"
+            name="reps"
+            value="{{ workout[3] }}"
+        >
+
+        <p>重量</p>
+
+        <input
+            type="number"
+            name="weight"
+            value="{{ workout[4] }}"
+        >
+
+        <button type="submit">
+            更新
+        </button>
+
+    </form>
+
+    <br>
+
+    <a href="/">戻る</a>
+
+</div>
+
+</div>
+
+</body>
+</html>

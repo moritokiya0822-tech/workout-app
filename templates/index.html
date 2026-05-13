@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>若菜殺戮用筋トレ記録アプリ</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>若菜殺戮用筋トレ記録アプリ</h1>
+
+        <a href="/logout">
+            ログアウト
+        </a>
+
+        <form action="/record" method="POST">
+
+            <p>日付</p>
+            <input type="date" name="date">
+
+            <p>種目</p>
+            <input type="text" name="menu">
+
+            <p>回数</p>
+            <input type="number" name="reps">
+
+            <p>重量(kg)</p>
+            <input type="number" name="weight">
+
+            <button type="submit">
+                記録する
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="card">
+
+        <h2>種目フィルター</h2>
+
+        <form method="GET" action="/">
+
+            <select name="menu">
+
+                <option value="">
+                    すべて
+                </option>
+
+                {% for menu in menus %}
+
+                <option
+                    value="{{ menu[0] }}"
+                    {% if selected_menu == menu[0] %}
+                    selected
+                    {% endif %}
+                >
+                    {{ menu[0] }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+            <button type="submit">
+                絞り込み
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="card">
+
+        <h2>記録一覧</h2>
+
+        {% for workout in workouts %}
+
+        <div class="record">
+
+            {{ workout[1] }}
+            {{ workout[2] }}
+            {{ workout[3] }}回
+            {{ workout[4] }}kg
+
+            <a href="/edit/{{ workout[0] }}">
+                編集
+            </a>
+
+            <a href="/delete/{{ workout[0] }}">
+                削除
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="card">
+
+        <h2>重量グラフ</h2>
+
+        <canvas id="weightChart"></canvas>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const chartLabels = JSON.parse('{{ labels | tojson | safe }}');
+
+const chartWeights = JSON.parse('{{ weights | tojson | safe }}');
+
+const ctx = document.getElementById('weightChart');
+
+new Chart(ctx, {
+
+    type: 'line',
+
+    data: {
+
+        labels: chartLabels,
+
+        datasets: [{
+            label: '重量(kg)',
+            data: chartWeights
+        }]
+    }
+
+});
+
+</script>
+
+</body>
+</html>
