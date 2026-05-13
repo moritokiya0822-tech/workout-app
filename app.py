@@ -311,3 +311,34 @@ with app.app_context():
     """)
     
     db.connection.commit()
+import sqlite3
+
+def get_db():
+    conn = sqlite3.connect("workout.db")
+    return conn
+
+@app.route("/register", methods=["POST"])
+def register():
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT,
+            password TEXT
+        )
+    """)
+
+    conn.commit()
+
+    # 登録処理
+    cursor.execute(
+        "INSERT INTO users (username, password) VALUES (?, ?)",
+        (username, password)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/login")
