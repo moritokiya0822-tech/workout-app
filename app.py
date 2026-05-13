@@ -5,6 +5,7 @@ app = Flask(__name__)
 
 app.secret_key = "secret_key"
 
+init_db()
 
 # DB初期化
 def init_db():
